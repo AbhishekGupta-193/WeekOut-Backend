@@ -58,7 +58,7 @@ public class AuthService {
         String token = jwtService.generateToken(user.getEmail());
         long expiresAt = System.currentTimeMillis() + 3600_000L; // match jwt.expiration-ms if you want
 
-        return new AuthResponse(token, "Bearer", expiresAt);
+        return new AuthResponse(token, "Bearer", expiresAt, user);
     }
 
     private UserResponse toUserResponse(User u) {
