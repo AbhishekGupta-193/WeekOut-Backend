@@ -4,12 +4,11 @@ import com.weekout.backend.DTOs.*;
 import com.weekout.backend.Model.User;
 import com.weekout.backend.Repositories.UserRepository;
 import com.weekout.backend.Security.JwtService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -73,5 +72,11 @@ public class AuthService {
         r.setCreatedAt(u.getCreatedAt());
         return r;
     }
+
+    public User getUserById(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
 }
 

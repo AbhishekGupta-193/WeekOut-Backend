@@ -1,11 +1,13 @@
 package com.weekout.backend.Controllers;
 
 import com.weekout.backend.DTOs.*;
+import com.weekout.backend.Model.User;
 import com.weekout.backend.Services.AuthService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,6 +29,12 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
         AuthResponse resp = authService.login(req);
         return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+        User userResponse = authService.getUserById(id);
+        return ResponseEntity.ok(userResponse);
     }
 }
 
