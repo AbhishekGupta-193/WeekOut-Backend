@@ -5,7 +5,9 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -18,6 +20,20 @@ public class Plan {
     @Id
     @GeneratedValue
     private UUID id;
+
+    // NEW: Reference to the User entity for host
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "host_user_id", nullable = true)
+    private User hostUser;
+
+    // NEW: List of joined users
+    @ManyToMany
+    @JoinTable(
+            name = "plan_joined_users",
+            joinColumns = @JoinColumn(name = "plan_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> joinedUsers = new HashSet<>();
 
     @Column(name = "host_id", nullable = false)
     private UUID hostId;

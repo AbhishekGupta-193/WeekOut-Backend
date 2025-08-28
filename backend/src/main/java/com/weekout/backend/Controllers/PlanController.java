@@ -22,10 +22,27 @@ public class PlanController {
         this.planService = planService;
     }
 
-    @PostMapping ("/create")
-    public ResponseEntity<Plan> createPlan(@RequestBody Plan plan) {
-        Plan createdPlan = planService.createPlan(plan);
+//    @PostMapping ("/create")
+//    public ResponseEntity<Plan> createPlan(@RequestBody Plan plan) {
+//        Plan createdPlan = planService.createPlan(plan);
+//        return new ResponseEntity<>(createdPlan, HttpStatus.CREATED);
+//    }
+    @PostMapping("/create/{hostUserId}")
+    public ResponseEntity<Plan> createPlan(@PathVariable UUID hostUserId, @RequestBody Plan plan) {
+        Plan createdPlan = planService.createPlan(plan, hostUserId);
         return new ResponseEntity<>(createdPlan, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{planId}/join/{userId}")
+    public ResponseEntity<Plan> joinPlan(@PathVariable UUID planId, @PathVariable UUID userId) {
+        Plan updatedPlan = planService.joinPlan(planId, userId);
+        return ResponseEntity.ok(updatedPlan);
+    }
+
+    @PostMapping("/{planId}/leave/{userId}")
+    public ResponseEntity<Plan> leavePlan(@PathVariable UUID planId, @PathVariable UUID userId) {
+        Plan updatedPlan = planService.leavePlan(planId, userId);
+        return ResponseEntity.ok(updatedPlan);
     }
 
     // GET /api/plans/get → Get all public plans with optional filters
