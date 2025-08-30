@@ -11,14 +11,17 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
     @Id
     @Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
+    @EqualsAndHashCode.Include
     private UUID id;
 
     private String name;

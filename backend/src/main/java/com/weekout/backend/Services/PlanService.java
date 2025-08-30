@@ -55,7 +55,10 @@ public class PlanService {
             throw new RuntimeException("Plan is full");
         }
 
-        plan.getJoinedUsers().add(user);
+        // ✅ Ensure user is not already in the set
+        if (!plan.getJoinedUsers().contains(user)) {
+            plan.getJoinedUsers().add(user);
+        }
         return planRepository.save(plan);
     }
 
