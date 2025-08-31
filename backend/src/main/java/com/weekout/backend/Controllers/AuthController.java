@@ -36,5 +36,15 @@ public class AuthController {
         User userResponse = authService.getUserById(id);
         return ResponseEntity.ok(userResponse);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable UUID id,
+            @RequestBody UpdateUserRequest req
+    ) {
+        UserResponse updated = authService.updateUser(id, req);
+        return ResponseEntity.ok(updated);
+    }
+
 }
 

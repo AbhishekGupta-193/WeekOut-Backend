@@ -78,5 +78,21 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    public UserResponse updateUser(UUID userId, UpdateUserRequest req) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Update only if values are provided
+        if (req.getName() != null) user.setName(req.getName());
+        if (req.getEmail() != null) user.setEmail(req.getEmail());
+        if (req.getPhoneNumber() != null) user.setPhoneNumber(req.getPhoneNumber());
+        if (req.getProfilePictureUrl() != null) user.setProfilePictureUrl(req.getProfilePictureUrl());
+        if (req.getBio() != null) user.setBio(req.getBio());
+        if (req.getInterests() != null) user.setInterests(req.getInterests());
+
+        User updated = userRepository.save(user);
+        return toUserResponse(updated);
+    }
+
 }
 
